@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>แจ้งการเดินทาง | Pharmacy Joint Meeting 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&family=Prompt:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16251f; --muted:#62756c; --bg:#f2f6f4; --card:#fff; --line:#dde7e2;
+  --forest:#0f3d2e; --forest2:#17604a;
+  --van:#d9780a; --van-bg:#fff2de; --van-line:#f3c98e;
+  --self:#12805f; --self-bg:#e1f5ec; --self-line:#9dd8c0;
+  --none:#6b7c74; --none-bg:#edf1ef; --none-line:#d3dcd8;
+  --danger:#a3321f;
+  --r:16px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 'IBM Plex Sans Thai',system-ui,sans-serif}
+h1,h2,h3,.num{font-family:'Prompt','IBM Plex Sans Thai',sans-serif}
+button{font:inherit;color:inherit}
+.wrap{max-width:680px;margin:0 auto;padding:0 16px}
+svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* ---- hero ---- */
+.hero{background:var(--forest);color:#fff;padding:26px 0 64px}
+.hero .kicker{margin:0 0 6px;color:#9fd0ba;font-size:14px;font-weight:500}
+.hero h1{margin:0 0 6px;font-size:25px;line-height:1.3;font-weight:600}
+.hero .topic{margin:0 0 18px;color:#cfe6db;font-size:14.5px}
+.meta{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.meta li{display:flex;gap:10px;align-items:flex-start;font-size:15px}
+.meta svg{margin-top:3px;color:#9fd0ba}
+
+/* ---- ticket รถตู้ ---- */
+.ticket{margin:-44px 0 0;position:relative;background:var(--card);border-radius:var(--r);box-shadow:0 6px 24px rgba(15,61,46,.16);display:flex;gap:14px;align-items:center;padding:16px 18px;border-left:6px solid var(--van)}
+.ticket .ic{width:46px;height:46px;border-radius:12px;background:var(--van-bg);color:var(--van);display:grid;place-items:center;flex:none}
+.ticket .ic svg{width:26px;height:26px}
+.ticket small{display:block;color:var(--muted);font-size:13.5px;line-height:1.3}
+.ticket b{display:block;font:600 19px/1.35 'Prompt',sans-serif}
+.ticket .where{font-size:14.5px}
+
+section{margin:26px 0}
+h2{margin:0 0 4px;font-size:19px;font-weight:600}
+.sub{margin:0 0 14px;color:var(--muted);font-size:14.5px}
+
+/* ---- สรุป ---- */
+.bar{display:flex;height:14px;border-radius:99px;overflow:hidden;background:var(--none-bg)}
+.bar i{display:block;transition:width .4s}
+.bar .b-van{background:var(--van)}.bar .b-self{background:var(--self)}.bar .b-none{background:#c8d3ce}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin:10px 0 0;font-size:14.5px}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.legend b{font-family:'Prompt',sans-serif;font-weight:600}
+
+/* ---- board ---- */
+.tools{display:grid;gap:10px;margin-bottom:14px}
+.search{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0 12px}
+.search svg{color:var(--muted)}
+.search input{flex:1;min-width:0;border:0;background:none;font:inherit;padding:11px 0;color:var(--ink);outline:none}
+.search:focus-within{border-color:var(--forest2);box-shadow:0 0 0 3px #bfe0d1}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;border:1px solid var(--line);background:var(--card);border-radius:99px;padding:6px 14px;font-size:14.5px;cursor:pointer;white-space:nowrap}
+.tab b{font-family:'Prompt',sans-serif;font-weight:600;margin-left:4px}
+.tab[aria-pressed="true"]{background:var(--forest);border-color:var(--forest);color:#fff}
+
+.group{margin:0 0 18px}
+.ghead{display:flex;align-items:center;gap:8px;margin:0 0 8px;font:600 16px 'Prompt',sans-serif}
+.ghead .dot{width:10px;height:10px;border-radius:50%}
+.ghead .cnt{margin-left:auto;font-weight:500;color:var(--muted);font-size:14px}
+.chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:8px}
+.chip{display:flex;align-items:center;gap:8px;min-height:46px;padding:8px 12px;border-radius:12px;border:1.5px solid;text-align:left;cursor:pointer;font-weight:500;line-height:1.25;background:var(--card)}
+.chip svg{width:18px;height:18px}
+.chip.van{background:var(--van-bg);border-color:var(--van-line);color:#7a4306}
+.chip.van svg{color:var(--van)}
+.chip.self{background:var(--self-bg);border-color:var(--self-line);color:#0b5a43}
+.chip.self svg{color:var(--self)}
+.chip.none{background:#fff;border-color:var(--none-line);border-style:dashed;color:var(--none)}
+.chip:hover{filter:brightness(.97)}
+.chip:focus-visible,.tab:focus-visible,.choice:focus-visible,.btn:focus-visible,summary:focus-visible,a:focus-visible,.x:focus-visible{outline:3px solid #7ec3a5;outline-offset:2px}
+.empty{padding:24px;text-align:center;color:var(--muted);background:var(--card);border-radius:12px}
+
+/* ---- ประชาสัมพันธ์ ---- */
+.ann{display:grid;gap:10px}
+.ann article{background:var(--card);border-radius:14px;padding:14px 16px;border:1px solid var(--line)}
+.ann article.pin{border-color:var(--van-line);background:#fffaf1}
+.ann h3{margin:0 0 4px;font-size:16.5px;font-weight:600;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pill{font:500 12px 'IBM Plex Sans Thai';color:#7a4306;background:var(--van-bg);border-radius:99px;padding:1px 9px}
+.ann p{margin:0;white-space:pre-line}
+.ann a.link{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:7px 14px;border-radius:99px;background:var(--forest);color:#fff;font-weight:500;text-decoration:none;font-size:14.5px}
+
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0 16px}
+summary{cursor:pointer;padding:14px 0;font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:14.5px;margin-bottom:10px}
+td{padding:8px 6px;border-top:1px solid var(--line);vertical-align:top}
+td.t{white-space:nowrap;color:var(--forest2);font-weight:600;padding-right:12px}
+td small{color:var(--muted)}
+
+.adminbox{background:var(--card);border:1px dashed var(--forest2);border-radius:14px;padding:16px}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+.btn{border:0;border-radius:12px;padding:12px 18px;font-weight:600;cursor:pointer;background:var(--forest);color:#fff}
+.btn.ghost{background:#fff;color:var(--forest);border:1.5px solid var(--forest)}
+.btn[disabled]{background:#9fb5ab;cursor:not-allowed}
+footer{padding:4px 0 56px;color:var(--muted);font-size:14px}
+.loading{padding:60px 0;text-align:center;color:var(--muted)}
+
+/* ---- sheet ---- */
+.overlay{position:fixed;inset:0;background:rgba(8,28,20,.55);display:flex;align-items:flex-end;justify-content:center;z-index:20}
+.overlay[hidden]{display:none}
+.sheet{background:var(--card);width:100%;max-width:520px;border-radius:22px 22px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom,0px));max-height:92vh;overflow:auto}
+@media (min-width:640px){.overlay{align-items:center}.sheet{border-radius:22px}}
+.sheet .top{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+.sheet h3{margin:0;font-size:21px;font-weight:600;line-height:1.3}
+.sheet .who{margin:0;color:var(--muted);font-size:14.5px}
+.x{margin-left:auto;border:0;background:var(--none-bg);width:36px;height:36px;border-radius:50%;cursor:pointer;display:grid;place-items:center;flex:none}
+.choices{display:grid;gap:10px;margin-bottom:14px}
+.choice{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:14px;border-radius:14px;border:2px solid var(--line);background:#fff;cursor:pointer}
+.choice .ic{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;flex:none}
+.choice .ic svg{width:26px;height:26px}
+.choice.van .ic{background:var(--van-bg);color:var(--van)}
+.choice.self .ic{background:var(--self-bg);color:var(--self)}
+.choice b{display:block;font:600 17px/1.3 'Prompt',sans-serif}
+.choice span.s{display:block;color:var(--muted);font-size:14px;line-height:1.4;margin-top:2px}
+.choice .tick{margin-left:auto;width:24px;height:24px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;flex:none;color:transparent}
+.choice[aria-pressed="true"].van{border-color:var(--van);background:var(--van-bg)}
+.choice[aria-pressed="true"].self{border-color:var(--self);background:var(--self-bg)}
+.choice[aria-pressed="true"] .tick{background:var(--forest);border-color:var(--forest);color:#fff}
+.choice[disabled]{opacity:.55;cursor:not-allowed}
+.sheet .btn{width:100%;font-size:17px}
+.err{color:var(--danger);font-weight:500;margin:10px 0 0}
+.note{background:var(--none-bg);border-radius:10px;padding:10px 12px;font-size:14.5px;margin:0 0 12px}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--forest);color:#fff;padding:12px 20px;border-radius:99px;font-weight:500;z-index:30;box-shadow:0 8px 24px rgba(0,0,0,.25);max-width:90vw;text-align:center}
+.toast[hidden]{display:none}
+@media (prefers-reduced-motion:no-preference){
+  .sheet{animation:up .22s ease-out}
+  @keyframes up{from{transform:translateY(24px);opacity:.4}to{transform:none;opacity:1}}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-van" viewBox="0 0 24 24"><path d="M2 16V7.5A1.5 1.5 0 0 1 3.5 6H13a2 2 0 0 1 1.6.8L18 11h2.5a1.5 1.5 0 0 1 1.5 1.5V16h-2M2 16h2M9 16h6M14 6v5h4"/><circle cx="6.5" cy="16.5" r="2"/><circle cx="17.5" cy="16.5" r="2"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3A4 4 0 0 0 11 18.7l1-1"/></symbol>
+    <symbol id="i-dash" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" stroke-dasharray="3 3"/></symbol>
+  </defs>
+</svg>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">Pharmacy Joint Meeting</p>
+    <h1 id="eventTitle">Siriraj Hospital &amp; Ramathibodi Hospital</h1>
+    <p class="topic" id="eventTopic"></p>
+    <ul class="meta">
+      <li><svg class="i"><use href="#i-cal"/></svg><span id="fDate">-</span></li>
+      <li><svg class="i"><use href="#i-clock"/></svg><span id="fTime">-</span></li>
+      <li><svg class="i"><use href="#i-pin"/></svg><span id="fVenue">-</span></li>
+    </ul>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="ticket" id="ticket" hidden>
+    <div class="ic"><svg class="i"><use href="#i-van"/></svg></div>
+    <div>
+      <small>รถตู้ออกจากโรงพยาบาล</small>
+      <b id="tTime"></b>
+      <div class="where" id="tWhere"></div>
+    </div>
+  </div>
+
+  <div id="loading" class="loading">กำลังโหลดข้อมูล…</div>
+
+  <div id="app" hidden>
+    <section aria-labelledby="hSum">
+      <h2 id="hSum">ภาพรวมการเดินทาง</h2>
+      <div class="bar" id="bar" role="img" aria-label="สัดส่วนการเดินทาง"></div>
+      <div class="legend">
+        <span><i style="background:var(--van)"></i>รถตู้ <b id="cVan">0</b></span>
+        <span><i style="background:var(--self)"></i>ไปเอง <b id="cSelf">0</b></span>
+        <span><i style="background:#c8d3ce"></i>ยังไม่แจ้ง <b id="cNone">0</b></span>
+      </div>
+      <p class="sub" id="capHint" style="margin:8px 0 0" hidden></p>
+    </section>
+
+    <section aria-labelledby="hBoard">
+      <h2 id="hBoard">แตะชื่อของคุณเพื่อแจ้งการเดินทาง</h2>
+      <p class="sub" id="boardSub">ชื่อที่มีสีคือแจ้งแล้ว แตะชื่อตัวเองอีกครั้งเพื่อเปลี่ยนได้</p>
+      <div class="tools">
+        <label class="search">
+          <svg class="i"><use href="#i-search"/></svg>
+          <input id="q" type="search" placeholder="ค้นหาชื่อ" autocomplete="off" aria-label="ค้นหาชื่อ">
+        </label>
+        <div class="tabs" id="tabs" role="group" aria-label="กรองตามสถานะ"></div>
+      </div>
+      <div id="board"></div>
+    </section>
+
+    <section aria-labelledby="hAnn">
+      <h2 id="hAnn" style="margin-bottom:12px">ประชาสัมพันธ์</h2>
+      <div class="ann" id="ann"></div>
+    </section>
+
+    <section aria-labelledby="hProg">
+      <h2 id="hProg" style="margin-bottom:12px">กำหนดการ</h2>
+      <details>
+        <summary>ดูกำหนดการภายในงาน</summary>
+        <table>
+          <tr><td class="t">08.00–08.30</td><td>ลงทะเบียนและรับประทานอาหารว่าง</td></tr>
+          <tr><td class="t">08.30–09.45</td><td>Clinical Value of Prescription Analysis · Prescription Analysis in OPD Care · Prescription Analysis in IPD and Ward Pharmacy Practice<br><small>Ph.Premjit Suttipoom (Siriraj) · Ph.Pakwan Bunupuradah (Ramathibodi)</small></td></tr>
+          <tr><td class="t">09.45–10.15</td><td>Digital Transformation in Hospital Pharmacy: Building a Modern Healthcare System (Lecture)<br><small>Ph.Thanatcha Songmuang (Warinchamrab)</small></td></tr>
+          <tr><td class="t">10.15–10.30</td><td>พักรับประทานอาหารว่าง</td></tr>
+          <tr><td class="t">10.30–12.00</td><td>Digital Transformation in Hospital Pharmacy (Workshop)<br><small>Ph.Thanatcha Songmuang</small></td></tr>
+          <tr><td class="t">12.00–12.15</td><td>Q &amp; A / Closing Remarks</td></tr>
+          <tr><td class="t">12.15–13.15</td><td>รับประทานอาหารกลางวัน · Goji Kitchen (International Buffet)</td></tr>
+        </table>
+      </details>
+    </section>
+
+    <section id="adminSec" hidden aria-labelledby="hAdmin">
+      <h2 id="hAdmin" style="margin-bottom:12px">สำหรับ Admin</h2>
+      <div class="adminbox">
+        <div class="row">
+          <button class="btn ghost" id="cpVan" type="button">คัดลอกรายชื่อขึ้นรถตู้</button>
+          <button class="btn ghost" id="cpNone" type="button">คัดลอกรายชื่อที่ยังไม่แจ้ง</button>
+        </div>
+        <p class="sub" style="margin:12px 0 0">แก้ข้อมูล ประกาศ และตั้งค่าทั้งหมดได้โดยตรงใน Google Sheet</p>
+      </div>
+    </section>
+  </div>
+</main>
+<footer class="wrap" id="foot"></footer>
+
+<!-- bottom sheet -->
+<div class="overlay" id="overlay" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sName">
+    <div class="top">
+      <div>
+        <p class="who">คุณจะเดินทางไปงานอย่างไร</p>
+        <h3 id="sName"></h3>
+      </div>
+      <button class="x" id="sClose" type="button" aria-label="ปิด"><svg class="i"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="note" id="sClosed" hidden>ขณะนี้ปิดรับการแจ้งแล้ว หากต้องการเปลี่ยนโปรดติดต่อ admin</div>
+    <div class="choices">
+      <button type="button" class="choice van" id="optVan" aria-pressed="false">
+        <span class="ic"><svg class="i"><use href="#i-van"/></svg></span>
+        <span><b>รถตู้จาก รพ.</b><span class="s" id="vanSub"></span></span>
+        <span class="tick"><svg class="i" style="width:15px;height:15px;stroke-width:3"><use href="#i-check"/></svg></span>
+      </button>
+      <button type="button" class="choice self" id="optSelf" aria-pressed="false">
+        <span class="ic"><svg class="i"><use href="#i-pin"/></svg></span>
+        <span><b>เดินทางไปเอง</b><span class="s">พบกันที่สถานที่จัดงาน</span></span>
+        <span class="tick"><svg class="i" style="width:15px;height:15px;stroke-width:3"><use href="#i-check"/></svg></span>
+      </button>
+    </div>
+    <button class="btn" id="sSave" type="button" disabled>บันทึก</button>
+    <div class="err" id="sErr" role="alert"></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+// ★ วาง Web app URL ที่ลงท้าย /exec ตรงนี้
+const API = 'https://script.google.com/macros/s/AKfycbyDjSHPe3nlfR0cS9fsmk0Mv5tFERwXyYCkhbZ6-gH8MP8ivzMSopO9ibImbAg3VgbG/exec';
+const OPT_VAN = 'รถตู้จาก รพ.';
+const OPT_SELF = 'เดินทางไปเอง';
+const $ = id => document.getElementById(id);
+const KEY = { van: OPT_VAN, self: OPT_SELF };
+let D = null, filter = 'all', selId = '', pick = '', busy = false, toastTimer = null;
+
+function el(tag, cls, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text != null) e.textContent = text;
+  return e;
+}
+function icon(id, cls) {
+  const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  s.setAttribute('class', 'i' + (cls ? ' ' + cls : ''));
+  const u = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+  u.setAttribute('href', '#' + id);
+  s.appendChild(u);
+  return s;
+}
+const statusOf = r => r.choice === OPT_VAN ? 'van' : r.choice === OPT_SELF ? 'self' : 'none';
+const isOpen = () => String(D.settings.reg_open || 'TRUE').toUpperCase() !== 'FALSE';
+function counts() {
+  const c = { van: 0, self: 0, none: 0 };
+  D.roster.forEach(r => c[statusOf(r)]++);
+  return c;
+}
+
+function load() {
+  fetch(API + '?action=data')
+    .then(r => r.json())
+    .then(d => {
+      if (d.error) throw new Error(d.error);
+      D = d; render();
+    })
+    .catch(err => {
+      $('loading').textContent = 'โหลดข้อมูลไม่สำเร็จ: ' + (err && err.message ? err.message : err);
+    });
+}
+
+function post(body) {
+  return fetch(API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // text/plain เพื่อเลี่ยง CORS preflight
+    body: JSON.stringify(body)
+  }).then(r => r.json());
+}
+
+function render() {
+  const S = D.settings;
+  $('loading').hidden = true;
+  $('app').hidden = false;
+  if (S.event_title) $('eventTitle').textContent = S.event_title;
+  $('eventTopic').textContent = S.event_topic || '';
+  $('fDate').textContent = S.event_date || '-';
+  $('fTime').textContent = S.event_time || '-';
+  $('fVenue').textContent = S.venue || '-';
+  if (S.app_title) document.title = S.app_title;
+
+  // ticket รถตู้
+  const hasTicket = S.van_time || S.van_point;
+  $('ticket').hidden = !hasTicket;
+  $('tTime').textContent = S.van_time ? 'เวลา ' + S.van_time + ' น.' : 'นัดขึ้นรถตู้';
+  $('tWhere').textContent = [S.van_point ? 'จุดนัด: ' + S.van_point : '', S.van_note].filter(Boolean).join(' · ');
+  if (!hasTicket) document.querySelector('.hero').style.paddingBottom = '26px';
+
+  $('boardSub').textContent = isOpen()
+    ? 'ชื่อที่มีสีคือแจ้งแล้ว แตะชื่อตัวเองอีกครั้งเพื่อเปลี่ยนได้'
+    : 'ปิดรับการแจ้งแล้ว ดูสถานะของทุกคนได้ที่นี่';
+  if (S.reg_deadline && isOpen()) $('boardSub').textContent += ' · แจ้งภายใน ' + S.reg_deadline;
+
+  renderSummary();
+  renderTabs();
+  renderBoard();
+  renderAnn();
+  $('adminSec').hidden = !D.isAdmin;
+  $('foot').textContent = S.contact ? 'สอบถามเพิ่มเติม: ' + S.contact : '';
+}
+
+function renderSummary() {
+  const c = counts(), t = Math.max(1, D.roster.length);
+  $('bar').innerHTML = '';
+  ['van', 'self', 'none'].forEach(k => {
+    const i = el('i', 'b-' + k); i.style.width = (c[k] / t * 100) + '%';
+    $('bar').appendChild(i);
+  });
+  $('cVan').textContent = c.van; $('cSelf').textContent = c.self; $('cNone').textContent = c.none;
+  const h = $('capHint');
+  if (D.capacity > 0) {
+    h.hidden = false;
+    h.textContent = 'รถตู้ว่างอีก ' + Math.max(0, D.capacity - c.van) + ' ที่นั่ง จากทั้งหมด ' + D.capacity;
+  } else h.hidden = true;
+}
+
+function renderTabs() {
+  const c = counts();
+  const defs = [['all', 'ทั้งหมด', D.roster.length], ['van', 'รถตู้', c.van], ['self', 'ไปเอง', c.self], ['none', 'ยังไม่แจ้ง', c.none]];
+  const box = $('tabs'); box.innerHTML = '';
+  defs.forEach(([k, label, n]) => {
+    const b = el('button', 'tab', label); b.type = 'button';
+    b.setAttribute('aria-pressed', filter === k);
+    b.appendChild(el('b', '', String(n)));
+    b.onclick = () => { filter = k; renderTabs(); renderBoard(); };
+    box.appendChild(b);
+  });
+}
+
+function renderBoard() {
+  const q = $('q').value.trim().toLowerCase();
+  const box = $('board'); box.innerHTML = '';
+  const groups = [['van', 'รถตู้จาก รพ.', 'var(--van)', 'i-van'], ['self', 'เดินทางไปเอง', 'var(--self)', 'i-pin'], ['none', 'ยังไม่แจ้ง', '#b3c0ba', 'i-dash']];
+  let shown = 0;
+  groups.forEach(([k, title, color, ic]) => {
+    if (filter !== 'all' && filter !== k) return;
+    const list = D.roster.filter(r => statusOf(r) === k && (!q || r.name.toLowerCase().includes(q)));
+    if (!list.length) return;
+    shown += list.length;
+    const g = el('div', 'group');
+    const h = el('div', 'ghead');
+    const dot = el('span', 'dot'); dot.style.background = color;
+    h.appendChild(dot); h.appendChild(document.createTextNode(title));
+    h.appendChild(el('span', 'cnt', list.length + ' คน'));
+    g.appendChild(h);
+    const chips = el('div', 'chips');
+    list.forEach(r => {
+      const b = el('button', 'chip ' + k); b.type = 'button';
+      b.appendChild(icon(ic));
+      b.appendChild(document.createTextNode(r.name));
+      b.setAttribute('aria-label', r.name + ' — ' + (r.choice || 'ยังไม่แจ้ง'));
+      b.onclick = () => openSheet(r.id);
+      chips.appendChild(b);
+    });
+    g.appendChild(chips);
+    box.appendChild(g);
+  });
+  if (!shown) box.appendChild(el('div', 'empty', q ? 'ไม่พบชื่อที่ค้นหา' : 'ไม่มีรายชื่อในกลุ่มนี้'));
+}
+
+function renderAnn() {
+  const box = $('ann'); box.innerHTML = '';
+  if (!D.announcements.length) { box.appendChild(el('div', 'empty', 'ยังไม่มีประกาศ')); return; }
+  D.announcements.forEach(a => {
+    const art = el('article', a.pin ? 'pin' : '');
+    const h = el('h3');
+    h.appendChild(document.createTextNode(a.title));
+    if (a.pin) h.appendChild(el('span', 'pill', 'สำคัญ'));
+    art.appendChild(h);
+    if (a.detail) art.appendChild(el('p', '', a.detail));
+    if (a.url) {
+      const l = el('a', 'link');
+      l.appendChild(icon('i-link')); l.appendChild(document.createTextNode(a.linkText));
+      l.href = a.url; l.target = '_blank'; l.rel = 'noopener noreferrer';
+      art.appendChild(l);
+    }
+    box.appendChild(art);
+  });
+}
+
+/* ---- sheet ---- */
+function setPick(c) {
+  pick = c;
+  $('optVan').setAttribute('aria-pressed', c === OPT_VAN);
+  $('optSelf').setAttribute('aria-pressed', c === OPT_SELF);
+  $('sSave').disabled = !c || busy || !isOpen();
+}
+
+function openSheet(id) {
+  const r = D.roster.find(x => x.id === id);
+  if (!r) return;
+  selId = id;
+  $('sName').textContent = r.name;
+  $('sErr').textContent = '';
+  const S = D.settings;
+  $('vanSub').textContent = [S.van_point ? 'นัดที่ ' + S.van_point : '', S.van_time ? 'รถออก ' + S.van_time + ' น.' : ''].filter(Boolean).join(' · ') || 'ออกเดินทางจากโรงพยาบาล';
+  const open = isOpen();
+  $('sClosed').hidden = open;
+  $('optSelf').disabled = !open;
+  const full = D.capacity > 0 && counts().van >= D.capacity && r.choice !== OPT_VAN;
+  $('optVan').disabled = !open || full;
+  if (full) $('vanSub').textContent = 'ที่นั่งเต็มแล้ว';
+  setPick(r.choice || '');
+  $('overlay').hidden = false;
+  document.body.style.overflow = 'hidden';
+  (r.choice ? $('sSave') : $('optVan')).focus();
+}
+
+function closeSheet() {
+  $('overlay').hidden = true;
+  document.body.style.overflow = '';
+  selId = '';
+}
+
+function showToast(t) {
+  const e = $('toast'); e.textContent = t; e.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => e.hidden = true, 3200);
+}
+
+$('optVan').addEventListener('click', () => setPick(OPT_VAN));
+$('optSelf').addEventListener('click', () => setPick(OPT_SELF));
+$('sClose').addEventListener('click', closeSheet);
+$('overlay').addEventListener('click', e => { if (e.target === $('overlay')) closeSheet(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('overlay').hidden) closeSheet(); });
+$('q').addEventListener('input', renderBoard);
+
+$('sSave').addEventListener('click', () => {
+  if (!selId || !pick || busy) return;
+  busy = true;
+  $('sSave').disabled = true; $('sSave').textContent = 'กำลังบันทึก…'; $('sErr').textContent = '';
+  const id = selId, c = pick;
+  const done = () => { busy = false; $('sSave').textContent = 'บันทึก'; };
+  post({ action: 'submit', id: id, choice: c })
+    .then(r => {
+      done();
+      if (r.ok) {
+        const p = D.roster.find(x => x.id === id);
+        if (p) { p.choice = c; showToast('บันทึกแล้ว: ' + p.name + ' — ' + c); }
+        closeSheet();
+        renderSummary(); renderTabs(); renderBoard();
+        load();
+      } else {
+        $('sErr').textContent = r.msg; setPick(pick);
+      }
+    })
+    .catch(err => {
+      done();
+      $('sErr').textContent = 'บันทึกไม่สำเร็จ: ' + (err && err.message ? err.message : err);
+      setPick(pick);
+    });
+});
+
+function copyNames(filterFn, btn, label) {
+  const t = D.roster.filter(filterFn).map(r => r.name + ' (' + r.dept + ')').join('\n');
+  navigator.clipboard.writeText(t).then(() => {
+    btn.textContent = 'คัดลอกแล้ว';
+    setTimeout(() => btn.textContent = label, 1500);
+  });
+}
+$('cpVan').addEventListener('click', e => copyNames(r => r.choice === OPT_VAN, e.target, 'คัดลอกรายชื่อขึ้นรถตู้'));
+$('cpNone').addEventListener('click', e => copyNames(r => !r.choice, e.target, 'คัดลอกรายชื่อที่ยังไม่แจ้ง'));
+
+load();
+</script>
+</body>
+</html>
